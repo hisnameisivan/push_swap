@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   find_min_max_median.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: waddam <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: draudrau <draudrau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/01 19:41:36 by draudrau          #+#    #+#             */
-/*   Updated: 2019/06/05 22:10:51 by waddam           ###   ########.fr       */
+/*   Updated: 2019/06/01 20:12:29 by draudrau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h" // все библиотеки там
+#include "push_swap.h"
 
 int		ft_max(t_push *push)
 {
@@ -23,7 +23,7 @@ int		ft_max(t_push *push)
 	{
 		if (push->stack_a[i] > max)
 			max = push->stack_a[i];
-		i++;
+		i++;	
 	}
 	return (max);
 }
@@ -39,7 +39,7 @@ int		ft_min(t_push *push)
 	{
 		if (push->stack_a[i] > min)
 			min = push->stack_a[i];
-		i++;
+		i++;	
 	}
 	return (min);
 }

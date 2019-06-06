@@ -1,4 +1,4 @@
-#include "push_swap.h" // все библиотеки там
+#include "push_swap.h"
 
 void ft_swap(long *a, long *b)
 {

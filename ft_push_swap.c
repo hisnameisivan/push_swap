@@ -3,21 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   ft_push_swap.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: waddam <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: draudrau <draudrau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/25 19:19:59 by draudrau          #+#    #+#             */
-/*   Updated: 2019/06/05 22:29:30 by waddam           ###   ########.fr       */
+/*   Updated: 2019/06/06 22:38:46 by draudrau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h" // все библиотеки там
+#include "push_swap.h"
 
 void	ft_initialization(t_push *push)
 {
 	push->stack_a = NULL;
 	push->stack_b = NULL;
+	push->index = 	NULL;
 	push->size_a = 0;
 	push->size_b = 0;
+	push->max = 0;
 	push->i = 0;
 }
 
@@ -139,14 +141,10 @@ int			ft_check_overflow(char *argv, int num) /*  Проверка на пере�
 	while (str[i] != '\0')
 	{
 		if (argv[j] != str[i])
-		{
-			free(str);	//05.06
 			return (1);
-		}
 		i++;
 		j++;
 	}
-	free(str);	//05.06
 	return (0);
 }
 
@@ -193,15 +191,15 @@ void	ft_record(t_push *push, char *argv)
 // }
 
 
-int		ft_analize_up_down(t_push *push, int i) // 05.06 rewrite the function
-{
-	int		count;
+// int		ft_analize_up_down(t_push *push, int i)
+// {
+// 	int		count;
 
-	count = (i < push->size_a - i ? i : push->size_a - i);
-	return (count);
-}
+// 	count = (i < (push->size_a - i) ? i : push->size_a - i);
+// 	return (count);
+// }
 
-void	ft_separate_stack(t_push *push, int max, int min)
+void	ft_separate_stack(t_push *push, int max, int min, int med)
 {
 	int i;
 	int	true_i;
@@ -209,9 +207,9 @@ void	ft_separate_stack(t_push *push, int max, int min)
 	i = 0;
 	while (i < push->size_a)
 	{
-		if (push->stack_a[i] != max || push->stack_a[i] != min)
+		if (push->stack_a[i] != max && push->stack_a[i] != min && push->stack_a[i] != med) 
 		{
-			if (ft_analize_up_down(push, i) == i)
+			if (i < push->size_a - i)
 			{
 				while (i > 0)
 				{
@@ -224,16 +222,51 @@ void	ft_separate_stack(t_push *push, int max, int min)
 				while (push->size_a - i > 0)
 				{
 					reverse_rotate_operations(push, 'a');
-					i--;
+					i++;
 				}
 			}
-
-
 			push_operations(push, 'b');
+			i = 0;
 		}
 		i++;
 	}
+	printstack(push);
+}
 
+void	ft_sep_stack(t_push *push)
+{
+	int		i;
+	int		j;
+	int		temp;
+
+	i = 1;
+	j = 1;
+	push->temp_arr = (int *)malloc(sizeof(int) * push->size_a);
+	push->temp_arr[0] = push->stack_a[0];
+	temp = push->stack_a[0];
+	while (push->stack_a[i] < push->max)
+	{
+		if (push->stack_a[i] > push->stack_a[0] && push->stack_a[i] > temp)
+		{
+			temp = push->stack_a[i];
+			push->temp_arr[j] = push->stack_a[i];
+			j++;
+		}
+		i++;
+	}
+	push->temp_arr = push->stack_a[i];
+	i++;
+	while (i < push->size_a)
+	{
+		if (push->stack_a[i] > push->stack_a[0] && push->stack_a[i] > temp)
+		{
+			temp = push->stack_a[i];
+			push->temp_arr[j] = push->stack_a[i];
+			j++;
+		}
+		i++;
+	}
+	
 }
 
 int		main(int ac, char **av)
@@ -248,11 +281,21 @@ int		main(int ac, char **av)
 		ft_valid(av[count], push);
 	push->stack_a = (long *)malloc(push->size_a * sizeof(long));
 	push->stack_b = (long *)malloc(push->size_a * sizeof(long));
+	push->index = (long *)malloc(push->size_a * sizeof(long));
 	count = 0;
 	while (++count < ac)
 		ft_record(push, av[count]);
 	ft_check_repeat(push);
-	ft_separate_stack(push, ft_max(push), ft_min(push));
+
+	//ft_separate_stack(push, ft_max(push), ft_min(push),ft_median(push));
+	push->max = ft_max(push);
+	ft_sep_stack(push);
+
+	// printf("%d\n", push->index[0]);
+	// printf("%d\n", push->index[1]);
+	// printf("%d\n", push->index[2]);
+	// printf("%d\n", push->index[3]);
+	// printf("%d\n", push->index[4]);
 	// printf("%d\n", ft_max(push));
 	// printf("%d\n", ft_min(push));
 	// printf("%d\n", ft_median(push));
