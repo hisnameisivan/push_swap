@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   find_min_max_median.c                              :+:      :+:    :+:   */
+/*   min_max.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: waddam <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: draudrau <draudrau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/01 19:41:36 by draudrau          #+#    #+#             */
-/*   Updated: 2019/06/08 23:56:59 by waddam           ###   ########.fr       */
+/*   Created: 2019/06/08 18:13:58 by draudrau          #+#    #+#             */
+/*   Updated: 2019/06/08 20:53:04 by draudrau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int		ft_max(t_push *push)
 	{
 		if (push->stack_a[i] > max)
 			max = push->stack_a[i];
-		i++;
+		i++;	
 	}
 	return (max);
 }
@@ -35,11 +35,11 @@ int		ft_min(t_push *push)
 
 	i = 1;
 	min = push->stack_a[0];
-	while (i < push->size_a) // 08.06 ">"
+	while (i < push->size_a)
 	{
-		if (push->stack_a[i] < min) // 08.06 ">"
+		if (push->stack_a[i] < min)
 			min = push->stack_a[i];
-		i++;
+		i++;	
 	}
 	return (min);
 }
@@ -64,17 +64,18 @@ void	ft_buble_sort(int **mas, t_push *push)
 	}
 }
 
-int		ft_median(t_push *push)
-{
-	int i;
-	int med;
-	int *tmp;
+// int		ft_median(t_push *push)
+// {
+// 	int i;
+// 	int med;
+// 	int *tmp;
 
-	tmp = (int*)malloc(sizeof(int) * push->size_a);
-	ft_memcpy(tmp, push->stack_a, push->size_a);
-	ft_buble_sort(&tmp, push);
-	i = push->size_a % 2;
-	med = tmp[i];
-	free(tmp);
-	return (med);
-}
+// 	tmp = (int*)malloc(sizeof(int) * push->size_a);
+// 	ft_memcpy(tmp, push->stack_a, push->size_a);
+// 	ft_buble_sort(&tmp, push);
+// 	i = push->size_a / 2;
+// 	med = tmp[i];
+// 	free(tmp);
+// 	return (med);
+// }
+

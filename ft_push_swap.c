@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_push_swap.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: draudrau <draudrau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: waddam <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/25 19:19:59 by draudrau          #+#    #+#             */
-/*   Updated: 2019/06/06 22:38:46 by draudrau         ###   ########.fr       */
+/*   Updated: 2019/06/08 23:59:41 by waddam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@ void	ft_initialization(t_push *push)
 	push->stack_a = NULL;
 	push->stack_b = NULL;
 	push->index = 	NULL;
+	push->temp_arr = NULL;
 	push->size_a = 0;
 	push->size_b = 0;
 	push->max = 0;
+	push->min  = 0;
 	push->i = 0;
 }
 
@@ -133,11 +135,15 @@ int			ft_check_overflow(char *argv, int num) /*  Проверка на пере�
 	char	*str;
 
 	i = 0;
+	j = 0;
 	str = ft_itoa(num);
 	if (num != 0)
+	{
 		j = ft_skip_null_znak(argv);
-	else
-		j = 0;
+		i = ft_skip_null_znak(str);
+	}
+	// else
+	// 	j = 0;
 	while (str[i] != '\0')
 	{
 		if (argv[j] != str[i])
@@ -199,17 +205,139 @@ void	ft_record(t_push *push, char *argv)
 // 	return (count);
 // }
 
-void	ft_separate_stack(t_push *push, int max, int min, int med)
+// void	ft_separate_stack(t_push *push, int max, int min, int med)
+// {
+// 	int i;
+// 	int	true_i;
+
+// 	i = 0;
+// 	while (i < push->size_a)
+// 	{
+// 		if (push->stack_a[i] != max && push->stack_a[i] != min && push->stack_a[i] != med)
+// 		{
+// 			if (i < push->size_a - i)
+// 			{
+// 				while (i > 0)
+// 				{
+// 					rotate_operations(push, 'a');
+// 					i--;
+// 				}
+// 			}
+// 			else
+// 			{
+// 				while (push->size_a - i > 0)
+// 				{
+// 					reverse_rotate_operations(push, 'a');
+// 					i++;
+// 				}
+// 			}
+// 			push_operations(push, 'b');
+// 			i = 0;
+// 		}
+// 		i++;
+// 	}
+// 	printstack(push);
+// }
+
+int		ft_random(t_push *push)
 {
 	int i;
-	int	true_i;
 
 	i = 0;
 	while (i < push->size_a)
 	{
-		if (push->stack_a[i] != max && push->stack_a[i] != min && push->stack_a[i] != med) 
+		if (push->stack_a[i] != push->max && push->stack_a[i] != push->min)
+			return (push->stack_a[i]);
+		i++;
+	}
+	return (123);
+}
+
+void	ft_select_to_leave_a(t_push *push)
+{
+	int		i;
+	int		j;
+	int		temp;
+	int		fl;
+
+	i = 1;
+	j = 1;
+	fl = 0;
+	push->temp_arr = (int *)malloc(sizeof(int) * push->size_a);
+	push->temp_arr[0] = push->stack_a[0];
+	temp = push->stack_a[0];
+	while (push->stack_a[i] < push->max && i < push->size_a)
+	{
+		if (push->stack_a[i] > push->stack_a[0] && push->stack_a[i] > temp)
 		{
-			if (i < push->size_a - i)
+			temp = push->stack_a[i];
+			push->temp_arr[j] = push->stack_a[i];
+			j++;
+		}
+		i++;
+	}
+	if (i < push->size_a) /* 08.06 не увеличивает индексы лишний раз */
+	{
+		push->temp_arr[j] = push->stack_a[i]; /* записываем max */
+		i++;
+		j++;
+	}
+	while (i < push->size_a)
+	{
+		temp = push->stack_a[i];
+		if (push->stack_a[i] < push->stack_a[0] && fl == 0)
+		{
+			push->temp_arr[j] = push->stack_a[i]; /* для записи 1го числа после max*/
+			fl = 1;
+			j++;
+		}
+		else if (push->stack_a[i] < push->stack_a[0] && fl == 1 && push->stack_a[i] > temp) /* после перехода через max ищем элементы меньше 1го числа в порядке возрастания*/
+		{
+			temp = push->stack_a[i];
+			push->temp_arr[j] = push->stack_a[i];
+			j++;
+		}
+		i++;
+	}
+	push->size_temp_arr = j;
+	if (j < 3) /* если max элемент на 1м месте, нужно добавить в массив еще 2 элемента*/
+	{
+		push->temp_arr[j] = ft_min(push);
+		push->temp_arr[j + 1] = ft_random(push);
+		push->size_temp_arr = 3;
+	}
+	printstack(push);
+}
+
+int 	ft_stay_item(t_push *push, int num)
+{
+	int i;
+
+	i = 0;
+	while (i < push->size_temp_arr)
+	{
+		if (num != push->temp_arr[i])
+			i++;
+		else
+			return (1);
+	}
+	return (0);
+}
+
+void	ft_separate_stack(t_push *push)
+{
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	while (i < push->size_a)
+	{
+		if (ft_stay_item(push, push->stack_a[i]) == 1)
+			i++;
+		else
+		{
+			if (i < push->size_a / 2)
 			{
 				while (i > 0)
 				{
@@ -228,45 +356,7 @@ void	ft_separate_stack(t_push *push, int max, int min, int med)
 			push_operations(push, 'b');
 			i = 0;
 		}
-		i++;
 	}
-	printstack(push);
-}
-
-void	ft_sep_stack(t_push *push)
-{
-	int		i;
-	int		j;
-	int		temp;
-
-	i = 1;
-	j = 1;
-	push->temp_arr = (int *)malloc(sizeof(int) * push->size_a);
-	push->temp_arr[0] = push->stack_a[0];
-	temp = push->stack_a[0];
-	while (push->stack_a[i] < push->max)
-	{
-		if (push->stack_a[i] > push->stack_a[0] && push->stack_a[i] > temp)
-		{
-			temp = push->stack_a[i];
-			push->temp_arr[j] = push->stack_a[i];
-			j++;
-		}
-		i++;
-	}
-	push->temp_arr = push->stack_a[i];
-	i++;
-	while (i < push->size_a)
-	{
-		if (push->stack_a[i] > push->stack_a[0] && push->stack_a[i] > temp)
-		{
-			temp = push->stack_a[i];
-			push->temp_arr[j] = push->stack_a[i];
-			j++;
-		}
-		i++;
-	}
-	
 }
 
 int		main(int ac, char **av)
@@ -289,7 +379,10 @@ int		main(int ac, char **av)
 
 	//ft_separate_stack(push, ft_max(push), ft_min(push),ft_median(push));
 	push->max = ft_max(push);
-	ft_sep_stack(push);
+	push->min = ft_min(push);
+	ft_select_to_leave_a(push);
+	ft_separate_stack(push);
+
 
 	// printf("%d\n", push->index[0]);
 	// printf("%d\n", push->index[1]);

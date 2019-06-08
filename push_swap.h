@@ -12,7 +12,9 @@ typedef struct	s_push
 	int		*temp_arr;
 	int		size_a;
 	int		size_b;
+	int		size_temp_arr;
 	int		max;
+	int		min;
 }				t_push;
 
 typedef struct	s_swap
@@ -30,12 +32,15 @@ typedef struct	s_swap
 int			ft_max(t_push *push);
 int			ft_min(t_push *push);
 void		ft_buble_sort(int **mas, t_push *push);
-int			ft_median(t_push *push);
+//int			ft_median(t_push *push);
 void		printstack(t_push *pu);
 void		swap_operations(t_push	*pu, char letter);
 void		push_operations(t_push	*pu, char letter);
 void		rotate_operations(t_push	*pu, char letter);
 void		reverse_rotate_operations(t_push	*pu, char letter);
 
+void	ft_select_to_leave_a(t_push *push);
+void	ft_separate_stack(t_push *push);
+int 	ft_stay_item(t_push *push, int num);
 
 #endif
