@@ -8,13 +8,15 @@ typedef struct	s_push
 	int		i;
 	long 	*stack_a;
 	long 	*stack_b;
-	long 	*index; // пока не используем
 	int		*temp_arr;
 	int		size_a;
 	int		size_b;
 	int		size_temp_arr;
 	int		max;
 	int		min;
+	int		res;
+	int 	index;
+	int		fl;
 }				t_push;
 
 typedef struct	s_swap
@@ -42,5 +44,6 @@ void		reverse_rotate_operations(t_push	*pu, char letter);
 void	ft_select_to_leave_a(t_push *push);
 void	ft_separate_stack(t_push *push);
 int 	ft_stay_item(t_push *push, int num);
+void	ft_count_operation(t_push *push);
 
 #endif

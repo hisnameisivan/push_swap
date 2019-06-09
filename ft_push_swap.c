@@ -3,26 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   ft_push_swap.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: waddam <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: draudrau <draudrau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/25 19:19:59 by draudrau          #+#    #+#             */
-/*   Updated: 2019/06/09 15:56:53 by waddam           ###   ########.fr       */
+/*   Updated: 2019/06/09 21:14:18 by draudrau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	ft_initialization(t_push *push)
+void	ft_initialization_push(t_push *push)
 {
+	push->i = 0;
 	push->stack_a = NULL;
 	push->stack_b = NULL;
-	push->index = 	NULL;
 	push->temp_arr = NULL;
 	push->size_a = 0;
 	push->size_b = 0;
+	push->size_temp_arr = 0;
 	push->max = 0;
 	push->min  = 0;
-	push->i = 0;
+	push->res = 0;
+	push->index = -1;
+	push->fl = 0;
 }
 
 void	ft_count_digits(char *av, t_push *push)
@@ -81,9 +84,9 @@ void	ft_valid(char *av, t_push *push)
 	i = 0;
 	while (av[i] != '\0')
 	{
-		if (((av[i] == '-' || av[i] == '+') && (av[i + 1] >= '0' && av[i + 1] <= '9')) && (i == 0 || av[i - 1] == ' '))
+		if (((av[i] == '-'  || av[i] == '+') && (av[i + 1] >= '0' && av[i + 1] <= '9')) && (i == 0 || av[i - 1] == ' '))
 			i++;
-		else if ((av[i] >= '0' && av[i] <= '9') || (av[i] == ' '))
+		else if ((av[i] >= '0'&& av[i] <= '9') || (av[i] == ' '))
 			i++;
 		else
 		{
@@ -213,7 +216,7 @@ void	ft_record(t_push *push, char *argv)
 // 	i = 0;
 // 	while (i < push->size_a)
 // 	{
-// 		if (push->stack_a[i] != max && push->stack_a[i] != min && push->stack_a[i] != med)
+// 		if (push->stack_a[i] != max && push->stack_a[i] != min && push->stack_a[i] != med) 
 // 		{
 // 			if (i < push->size_a - i)
 // 			{
@@ -300,7 +303,7 @@ void	ft_select_to_leave_a(t_push *push)
 		i++;
 	}
 	push->size_temp_arr = j;
-	if (j < 3) /* если max элемент на 1м месте, нужно добавить в массив еще 2 элемента*/ // ЕСЛИ В МАССИВЕ МЕНЕЕ ТРЕХ ЭЛЕМЕНТОВ ?
+	if (j < 3) /* если max элемент на 1м месте, нужно добавить в массив еще 2 элемента, но элементы не всегда отсортированы*/
 	{
 		push->temp_arr[j] = ft_min(push);
 		push->temp_arr[j + 1] = ft_random(push);
@@ -359,6 +362,170 @@ void	ft_separate_stack(t_push *push)
 	}
 }
 
+void	ft_initialization_swap(t_swap *swap)
+{
+	swap->pa = 0;
+	swap->pb = 0;
+	swap->ra = 0;
+	swap->rb = 0;
+	swap->rr = 0;
+	swap->rra = 0;
+	swap->rrb = 0;
+	swap->rrr = 0;
+}
+
+void	ft_free(t_swap ***temp, int i)
+{
+	while (--i >= 0)
+	{
+		free((*temp)[i]);
+		(*temp)[i] = NULL;
+	}
+	free(*temp);
+	*temp = NULL;
+}
+
+t_swap	**ft_allocate_memory(t_push *push)
+{
+	int		i;
+	t_swap 	**temp;
+
+	i = 0;
+	if (!(temp = (t_swap **)malloc(sizeof(t_swap *) * (push->size_b + 1))))
+		return (NULL);
+	while (i < push->size_b)
+	{
+		if (!(temp[i] = (t_swap *)malloc(sizeof(t_swap))))
+		{
+			ft_free(&temp, i);
+			return (NULL);
+		}
+		ft_initialization_swap(temp[i]);
+		i++;
+	}
+	temp[i] = NULL;
+	return (temp);
+}
+
+void	ft_analyze_operation(t_push *push, t_swap **swap, int count_arr, int count_b)
+{
+	swap[count_arr]->pa = 1;
+	while (swap[count_arr]->ra != 0 && swap[count_arr]->rb != 0)
+	{
+		swap[count_arr]->ra--;
+		swap[count_arr]->rb--;
+		swap[count_arr]->rr++;
+	}
+	while (swap[count_arr]->rra != 0 && swap[count_arr]->rrb != 0)
+	{
+		swap[count_arr]->rra--;
+		swap[count_arr]->rrb--;
+		swap[count_arr]->rrr++;
+	}
+	if (push->fl == 0)
+	{
+		push->res = swap[count_arr]->ra + swap[count_arr]->rb + 
+					swap[count_arr]->rr + swap[count_arr]->rra + 
+					swap[count_arr]->rrb + swap[count_arr]->rrr;
+		push->index = count_b;
+		push->fl  = 1;	
+	}
+	else if (push->fl  == 1 && push->res > swap[count_arr]->ra + swap[count_arr]->rb + swap[count_arr]->rr + swap[count_arr]->rra
+	+ swap[count_arr]->rrb + swap[count_arr]->rrr)
+	{
+		push->res = swap[count_arr]->ra + swap[count_arr]->rb + 
+					swap[count_arr]->rr + swap[count_arr]->rra + 
+					swap[count_arr]->rrb + swap[count_arr]->rrr;
+		push->index = count_b;
+	}
+}
+
+void	ft_sort_stack(t_push *push, t_swap *swap)
+{
+	while (swap->ra > 0)
+	{
+		rotate_operations(push, 'a');
+		swap->ra--;
+	}
+	while (swap->rb > 0)
+	{
+		rotate_operations(push, 'b');
+		swap->rb--;
+	}
+	while (swap->rr > 0)
+	{
+		rotate_operations(push, 'r');
+		swap->rr--;
+	}
+	while (swap->rra > 0)
+	{
+		reverse_rotate_operations(push, 'a');
+		swap->rra--;
+	}
+	while (swap->rrb> 0)
+	{
+		reverse_rotate_operations(push, 'b');
+		swap->rrb--;
+	}
+	while (swap->rrr> 0)
+	{
+		reverse_rotate_operations(push, 'r');
+		swap->rrr--;
+	}
+	push_operations(push, 'a');
+}
+
+void	ft_count_operation(t_push *push)
+{
+	int		count_b;
+	int		count_a;
+	int		count_arr;
+	t_swap **swap;
+	
+	count_b = 0;
+	count_a = 0;
+	count_arr = 0;
+	swap = ft_allocate_memory(push);
+	while (count_b < push->size_b)
+	{
+		if (count_b < push->size_b / 2 + 1)
+			swap[count_arr]->rb = count_b;
+		else 
+			swap[count_arr]->rrb = push->size_b - count_b;
+		count_a = 0;
+		while (count_a + 1 < push->size_a) /* если мы не нашли пару  i < элемента < i + 1 значит вставляем элемент в начало -> ra = 0 */
+		{
+			if ((push->stack_a[count_a] < push->stack_b[count_b]) && (push->stack_a[count_a + 1] > push->stack_b[count_b]))
+			{
+				if (count_a + 1 < push->size_a / 2 + 1)
+					swap[count_arr]->ra = count_a + 1;
+				else 
+					swap[count_arr]->rra = push->size_a - (count_a + 1);
+				break ;
+			}
+			else
+				count_a++;
+		}
+		ft_analyze_operation(push, swap, count_arr, count_b);
+		count_b++;
+	printf("pa = %d, pb = %d,\nra = %d, rb = %d, rr = %d,\nrra = %d, rrb = %d, rrr = %d\n",
+		swap[count_arr]->pa,
+		swap[count_arr]->pb,
+		swap[count_arr]->ra,
+		swap[count_arr]->rb,
+		swap[count_arr]->rr,
+		swap[count_arr]->rra,
+		swap[count_arr]->rrb,
+		swap[count_arr]->rrr
+		);
+		count_arr++;
+	}
+	ft_sort_stack(push, swap[push->index]);
+	ft_free(&swap, 0);
+
+}
+
+
 int		main(int ac, char **av)
 {
 	int		count;
@@ -366,12 +533,12 @@ int		main(int ac, char **av)
 
 	count = 0;
 	push = (t_push*)malloc(sizeof(t_push));
-	ft_initialization(push);
+	ft_initialization_push(push);
 	while (++count < ac)
 		ft_valid(av[count], push);
 	push->stack_a = (long *)malloc(push->size_a * sizeof(long));
 	push->stack_b = (long *)malloc(push->size_a * sizeof(long));
-	push->index = (long *)malloc(push->size_a * sizeof(long));
+	//push->index = (long *)malloc(push->size_a * sizeof(long));
 	count = 0;
 	while (++count < ac)
 		ft_record(push, av[count]);
@@ -382,6 +549,11 @@ int		main(int ac, char **av)
 	push->min = ft_min(push);
 	ft_select_to_leave_a(push);
 	ft_separate_stack(push);
+	while (push->size_b)
+	{
+		ft_count_operation(push);
+	}
+	//ft_sort_stack(push, swap);
 
 
 	// printf("%d\n", push->index[0]);

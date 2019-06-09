@@ -28,7 +28,7 @@ void	push_operations(t_push	*push, char letter) //Операции PA PB SS
 	int i;
 
 	i = letter == 'a' ? push->size_a : push->size_b;
-	if(letter == 'b' && push->size_a > 1)
+	if(letter == 'b' && push->size_a > 0)
 	{
 		if (push->size_b > 0)
 			while(i > 0)
@@ -43,7 +43,7 @@ void	push_operations(t_push	*push, char letter) //Операции PA PB SS
 		while (++i < push->size_a)
 			push->stack_a[i] = push->stack_a[i + 1];
 	}
-	else if(letter == 'a' && push->size_b > 1)
+	else if(letter == 'a' && push->size_b > 0)
 	{
 		if (push->size_a > 0)
 			while(i > 0)
