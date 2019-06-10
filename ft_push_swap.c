@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_push_swap.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: draudrau <draudrau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: waddam <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/25 19:19:59 by draudrau          #+#    #+#             */
-/*   Updated: 2019/06/09 21:14:18 by draudrau         ###   ########.fr       */
+/*   Updated: 2019/06/10 22:02:42 by waddam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,7 +216,7 @@ void	ft_record(t_push *push, char *argv)
 // 	i = 0;
 // 	while (i < push->size_a)
 // 	{
-// 		if (push->stack_a[i] != max && push->stack_a[i] != min && push->stack_a[i] != med) 
+// 		if (push->stack_a[i] != max && push->stack_a[i] != min && push->stack_a[i] != med)
 // 		{
 // 			if (i < push->size_a - i)
 // 			{
@@ -309,7 +309,7 @@ void	ft_select_to_leave_a(t_push *push)
 		push->temp_arr[j + 1] = ft_random(push);
 		push->size_temp_arr = 3;
 	}
-	printstack(push);
+	//printstack(push);
 }
 
 int 	ft_stay_item(t_push *push, int num)
@@ -345,6 +345,7 @@ void	ft_separate_stack(t_push *push)
 				while (i > 0)
 				{
 					rotate_operations(push, 'a');
+					printf("ra\n");
 					i--;
 				}
 			}
@@ -353,10 +354,12 @@ void	ft_separate_stack(t_push *push)
 				while (push->size_a - i > 0)
 				{
 					reverse_rotate_operations(push, 'a');
+					printf("rra\n");
 					i++;
 				}
 			}
 			push_operations(push, 'b');
+			printf("pb\n");
 			i = 0;
 		}
 	}
@@ -424,17 +427,17 @@ void	ft_analyze_operation(t_push *push, t_swap **swap, int count_arr, int count_
 	}
 	if (push->fl == 0)
 	{
-		push->res = swap[count_arr]->ra + swap[count_arr]->rb + 
-					swap[count_arr]->rr + swap[count_arr]->rra + 
+		push->res = swap[count_arr]->ra + swap[count_arr]->rb +
+					swap[count_arr]->rr + swap[count_arr]->rra +
 					swap[count_arr]->rrb + swap[count_arr]->rrr;
 		push->index = count_b;
-		push->fl  = 1;	
+		push->fl  = 1;
 	}
 	else if (push->fl  == 1 && push->res > swap[count_arr]->ra + swap[count_arr]->rb + swap[count_arr]->rr + swap[count_arr]->rra
 	+ swap[count_arr]->rrb + swap[count_arr]->rrr)
 	{
-		push->res = swap[count_arr]->ra + swap[count_arr]->rb + 
-					swap[count_arr]->rr + swap[count_arr]->rra + 
+		push->res = swap[count_arr]->ra + swap[count_arr]->rb +
+					swap[count_arr]->rr + swap[count_arr]->rra +
 					swap[count_arr]->rrb + swap[count_arr]->rrr;
 		push->index = count_b;
 	}
@@ -445,34 +448,41 @@ void	ft_sort_stack(t_push *push, t_swap *swap)
 	while (swap->ra > 0)
 	{
 		rotate_operations(push, 'a');
+		printf("ra\n");
 		swap->ra--;
 	}
 	while (swap->rb > 0)
 	{
 		rotate_operations(push, 'b');
+		printf("rb\n");
 		swap->rb--;
 	}
 	while (swap->rr > 0)
 	{
 		rotate_operations(push, 'r');
+		printf("rr\n");
 		swap->rr--;
 	}
 	while (swap->rra > 0)
 	{
 		reverse_rotate_operations(push, 'a');
+		printf("rra\n");
 		swap->rra--;
 	}
 	while (swap->rrb> 0)
 	{
 		reverse_rotate_operations(push, 'b');
+		printf("rrb\n");
 		swap->rrb--;
 	}
 	while (swap->rrr> 0)
 	{
 		reverse_rotate_operations(push, 'r');
+		printf("rrr\n");
 		swap->rrr--;
 	}
 	push_operations(push, 'a');
+	printf("pa\n");
 }
 
 void	ft_count_operation(t_push *push)
@@ -481,7 +491,7 @@ void	ft_count_operation(t_push *push)
 	int		count_a;
 	int		count_arr;
 	t_swap **swap;
-	
+
 	count_b = 0;
 	count_a = 0;
 	count_arr = 0;
@@ -490,7 +500,7 @@ void	ft_count_operation(t_push *push)
 	{
 		if (count_b < push->size_b / 2 + 1)
 			swap[count_arr]->rb = count_b;
-		else 
+		else
 			swap[count_arr]->rrb = push->size_b - count_b;
 		count_a = 0;
 		while (count_a + 1 < push->size_a) /* если мы не нашли пару  i < элемента < i + 1 значит вставляем элемент в начало -> ra = 0 */
@@ -499,7 +509,7 @@ void	ft_count_operation(t_push *push)
 			{
 				if (count_a + 1 < push->size_a / 2 + 1)
 					swap[count_arr]->ra = count_a + 1;
-				else 
+				else
 					swap[count_arr]->rra = push->size_a - (count_a + 1);
 				break ;
 			}
@@ -508,16 +518,16 @@ void	ft_count_operation(t_push *push)
 		}
 		ft_analyze_operation(push, swap, count_arr, count_b);
 		count_b++;
-	printf("pa = %d, pb = %d,\nra = %d, rb = %d, rr = %d,\nrra = %d, rrb = %d, rrr = %d\n",
-		swap[count_arr]->pa,
-		swap[count_arr]->pb,
-		swap[count_arr]->ra,
-		swap[count_arr]->rb,
-		swap[count_arr]->rr,
-		swap[count_arr]->rra,
-		swap[count_arr]->rrb,
-		swap[count_arr]->rrr
-		);
+	// printf("pa = %d, pb = %d,\nra = %d, rb = %d, rr = %d,\nrra = %d, rrb = %d, rrr = %d\n",
+	// 	swap[count_arr]->pa,
+	// 	swap[count_arr]->pb,
+	// 	swap[count_arr]->ra,
+	// 	swap[count_arr]->rb,
+	// 	swap[count_arr]->rr,
+	// 	swap[count_arr]->rra,
+	// 	swap[count_arr]->rrb,
+	// 	swap[count_arr]->rrr
+	// 	);
 		count_arr++;
 	}
 	ft_sort_stack(push, swap[push->index]);
@@ -525,6 +535,38 @@ void	ft_count_operation(t_push *push)
 
 }
 
+void	ft_stack_balance(t_push *push)
+{
+	int		min;
+	int		i;
+
+	i = 0;
+	min = ft_min(push);
+	while (push->stack_a[i] != min)
+	{
+		i++;
+	}
+	if (i < push->size_a / 2 + 1)
+	{
+		while (i > 0)
+		{
+			rotate_operations(push, 'a');
+			printf("ra\n");
+			i--;
+		}
+	}
+	else
+	{
+		i = push->size_a - i;
+		while (i > 0)
+		{
+			reverse_rotate_operations(push, 'a');
+			printf("rra\n");
+			i--;
+		}
+	}
+
+}
 
 int		main(int ac, char **av)
 {
@@ -553,6 +595,7 @@ int		main(int ac, char **av)
 	{
 		ft_count_operation(push);
 	}
+	ft_stack_balance(push);
 	//ft_sort_stack(push, swap);
 
 

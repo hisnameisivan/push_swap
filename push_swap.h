@@ -8,14 +8,14 @@ typedef struct	s_push
 	int		i;
 	long 	*stack_a;
 	long 	*stack_b;
-	int		*temp_arr;
+	int		*temp_arr; // массив для хранения элементов, которые остануться в стеке а
 	int		size_a;
 	int		size_b;
 	int		size_temp_arr;
 	int		max;
 	int		min;
 	int		res;
-	int 	index;
+	int 	index; // положение элемента, который будет возвращен в а
 	int		fl;
 }				t_push;
 
