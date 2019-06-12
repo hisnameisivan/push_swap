@@ -15,8 +15,8 @@ typedef struct	s_push
 	int		max;
 	int		min;
 	int		res;
-	int 	index; // положение элемента, который будет возвращен в а
-	int		fl;
+	int		index; // положение элемента, который будет возвращен в а
+	int		fl; // для функции ft_analyze_operation
 }				t_push;
 
 typedef struct	s_swap
@@ -41,7 +41,7 @@ void		push_operations(t_push	*pu, char letter);
 void		rotate_operations(t_push	*pu, char letter);
 void		reverse_rotate_operations(t_push	*pu, char letter);
 
-void	ft_select_to_leave_a(t_push *push);
+void	ft_select_to_leave_a(t_push *push); /* полностью переписали 12/06 - идем с min элемента*/
 void	ft_separate_stack(t_push *push);
 int 	ft_stay_item(t_push *push, int num);
 void	ft_count_operation(t_push *push);
@@ -50,6 +50,9 @@ void	ft_initialization_push(t_push *push);
 void	ft_valid(char *av, t_push *push);
 void	ft_record(t_push *push, char *argv);
 int		ft_check_repeat(t_push	*push);
+
+int		ft_check_sort_elements(t_push *push); /* 12.06 */
+void	ft_sort_three_item(t_push *push);
 
 
 #endif

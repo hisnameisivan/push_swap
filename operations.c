@@ -20,7 +20,7 @@ void	swap_operations(t_push	*push, char letter) //Операции SA SB SS
 		swap_operations(push, 'a');
 		swap_operations(push, 'b');
 	}
-	//printstack(push);
+	printstack(push);
 }
 
 void	push_operations(t_push	*push, char letter) //Операции PA PB SS
@@ -58,7 +58,7 @@ void	push_operations(t_push	*push, char letter) //Операции PA PB SS
 		while (++i < push->size_b)
 			push->stack_b[i] = push->stack_b[i + 1];
 	}
-	//printstack(push);
+	printstack(push);
 }
 
 void	rotate_operations(t_push *push, char letter) //Операции RA RB RR
@@ -85,7 +85,7 @@ void	rotate_operations(t_push *push, char letter) //Операции RA RB RR
 		rotate_operations(push, 'a');
 		rotate_operations(push, 'b');
 	}
-	//printstack(push);
+	printstack(push);
 }
 
 void	reverse_rotate_operations(t_push	*push, char letter) //Операции RRA RRB RRR
@@ -118,5 +118,5 @@ void	reverse_rotate_operations(t_push	*push, char letter) //Операции RRA
 		reverse_rotate_operations(push, 'a');
 		reverse_rotate_operations(push, 'b');
 	}
-	//printstack(push);
+	printstack(push);
 }
