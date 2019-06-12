@@ -46,4 +46,10 @@ void	ft_separate_stack(t_push *push);
 int 	ft_stay_item(t_push *push, int num);
 void	ft_count_operation(t_push *push);
 
+void	ft_initialization_push(t_push *push);
+void	ft_valid(char *av, t_push *push);
+void	ft_record(t_push *push, char *argv);
+int		ft_check_repeat(t_push	*push);
+
+
 #endif

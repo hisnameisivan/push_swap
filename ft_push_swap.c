@@ -6,7 +6,7 @@
 /*   By: waddam <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/25 19:19:59 by draudrau          #+#    #+#             */
-/*   Updated: 2019/06/10 22:02:42 by waddam           ###   ########.fr       */
+/*   Updated: 2019/06/12 13:58:07 by waddam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -568,53 +568,53 @@ void	ft_stack_balance(t_push *push)
 
 }
 
-int		main(int ac, char **av)
-{
-	int		count;
-	t_push	*push;
+// int		main(int ac, char **av)
+// {
+// 	int		count;
+// 	t_push	*push;
 
-	count = 0;
-	push = (t_push*)malloc(sizeof(t_push));
-	ft_initialization_push(push);
-	while (++count < ac)
-		ft_valid(av[count], push);
-	push->stack_a = (long *)malloc(push->size_a * sizeof(long));
-	push->stack_b = (long *)malloc(push->size_a * sizeof(long));
-	//push->index = (long *)malloc(push->size_a * sizeof(long));
-	count = 0;
-	while (++count < ac)
-		ft_record(push, av[count]);
-	ft_check_repeat(push);
+// 	count = 0;
+// 	push = (t_push*)malloc(sizeof(t_push));
+// 	ft_initialization_push(push);
+// 	while (++count < ac)
+// 		ft_valid(av[count], push);
+// 	push->stack_a = (long *)malloc(push->size_a * sizeof(long));
+// 	push->stack_b = (long *)malloc(push->size_a * sizeof(long));
+// 	//push->index = (long *)malloc(push->size_a * sizeof(long));
+// 	count = 0;
+// 	while (++count < ac)
+// 		ft_record(push, av[count]);
+// 	ft_check_repeat(push);
 
-	//ft_separate_stack(push, ft_max(push), ft_min(push),ft_median(push));
-	push->max = ft_max(push);
-	push->min = ft_min(push);
-	ft_select_to_leave_a(push);
-	ft_separate_stack(push);
-	while (push->size_b)
-	{
-		ft_count_operation(push);
-	}
-	ft_stack_balance(push);
-	//ft_sort_stack(push, swap);
+// 	//ft_separate_stack(push, ft_max(push), ft_min(push),ft_median(push));
+// 	push->max = ft_max(push);
+// 	push->min = ft_min(push);
+// 	ft_select_to_leave_a(push);
+// 	ft_separate_stack(push);
+// 	while (push->size_b)
+// 	{
+// 		ft_count_operation(push);
+// 	}
+// 	ft_stack_balance(push);
+// 	//ft_sort_stack(push, swap);
 
 
-	// printf("%d\n", push->index[0]);
-	// printf("%d\n", push->index[1]);
-	// printf("%d\n", push->index[2]);
-	// printf("%d\n", push->index[3]);
-	// printf("%d\n", push->index[4]);
-	// printf("%d\n", ft_max(push));
-	// printf("%d\n", ft_min(push));
-	// printf("%d\n", ft_median(push));
-	// printstack(push);
-	// push_operations(push, 'b');
-	// push_operations(push, 'b');
-	// push_operations(push, 'b');
-	// push_operations(push, 'b');
-	// reverse_rotate_operations(push, 'r');
-	// reverse_rotate_operations(push, 'r');
-	// reverse_rotate_operations(push, 'r');
-	// reverse_rotate_operations(push, 'r');
-	exit (0);
-}
+// 	// printf("%d\n", push->index[0]);
+// 	// printf("%d\n", push->index[1]);
+// 	// printf("%d\n", push->index[2]);
+// 	// printf("%d\n", push->index[3]);
+// 	// printf("%d\n", push->index[4]);
+// 	// printf("%d\n", ft_max(push));
+// 	// printf("%d\n", ft_min(push));
+// 	// printf("%d\n", ft_median(push));
+// 	// printstack(push);
+// 	// push_operations(push, 'b');
+// 	// push_operations(push, 'b');
+// 	// push_operations(push, 'b');
+// 	// push_operations(push, 'b');
+// 	// reverse_rotate_operations(push, 'r');
+// 	// reverse_rotate_operations(push, 'r');
+// 	// reverse_rotate_operations(push, 'r');
+// 	// reverse_rotate_operations(push, 'r');
+// 	exit (0);
+// }
