@@ -4,7 +4,7 @@ LIB_DIR	 = ./libft
 NAME	 = push_swap
 LIBFT 	 = $(LIB_DIR)/libft.a
 
-SRC 	 = push_swap.c operations.c find_min_max_median.c
+SRC 	 = ft_push_swap.c operations.c min_max.c operations.c
 
 OBJ 	 = $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
 

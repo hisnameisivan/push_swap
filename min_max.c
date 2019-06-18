@@ -6,7 +6,7 @@
 /*   By: draudrau <draudrau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 18:13:58 by draudrau          #+#    #+#             */
-/*   Updated: 2019/06/08 20:53:04 by draudrau         ###   ########.fr       */
+/*   Updated: 2019/06/18 18:54:21 by draudrau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,39 +43,3 @@ int		ft_min(t_push *push)
 	}
 	return (min);
 }
-
-void	ft_buble_sort(int **mas, t_push *push)
-{
-	int		i;
-	int		tmp;
-
-	i = 0;
-	while (i < push->size_a - 1)
-	{
-		if ((*mas)[i] > (*mas)[i + 1])
-		{
-			tmp = (*mas)[i];
-			(*mas)[i] = (*mas)[i + 1];
-			(*mas)[i + 1] = tmp;
-			i = 0;
-		}
-		else
-			i++;
-	}
-}
-
-// int		ft_median(t_push *push)
-// {
-// 	int i;
-// 	int med;
-// 	int *tmp;
-
-// 	tmp = (int*)malloc(sizeof(int) * push->size_a);
-// 	ft_memcpy(tmp, push->stack_a, push->size_a);
-// 	ft_buble_sort(&tmp, push);
-// 	i = push->size_a / 2;
-// 	med = tmp[i];
-// 	free(tmp);
-// 	return (med);
-// }
-
