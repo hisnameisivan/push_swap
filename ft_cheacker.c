@@ -3,29 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cheacker.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: draudrau <draudrau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: waddam <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/18 20:53:34 by draudrau          #+#    #+#             */
-/*   Updated: 2019/06/19 21:47:05 by draudrau         ###   ########.fr       */
+/*   Created: 2019/06/20 22:26:39 by waddam            #+#    #+#             */
+/*   Updated: 2019/06/21 00:03:58 by waddam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int		checker(t_push *push)
+int		ft_checker(t_push *push)
 {
 	int		i;
-	int		pre;
+	int		last;
 
 	i = 1;
 	if (push->stack_a[0] != push->min)
 		return (0);
-	pre = push->stack_a[0];
+	last = push->stack_a[0];
 	while (i < push->size_a)
 	{
-		if (push->stack_a[i] < pre)
+		if (push->stack_a[i] < last)
 			return (0);
-		pre = push->stack_a[i];
+		last = push->stack_a[i];
 		i++;
 	}
 	if (push->stack_a[push->size_a - 1] != push->max)
@@ -33,26 +33,7 @@ int		checker(t_push *push)
 	return (1);
 }
 
-// int		checker_2(t_push *push)
-// {
-// 	int		i;
-
-// 	i = 0;
-// 	if (push->stack_a[0] != push->min)
-// 		return (0);
-// 	while (i + 1 < push->size_a)
-// 	{
-// 		if (push->stack_a[i] < push->stack_a[i + 1])
-// 			i++;
-// 		else
-// 			return (0);
-// 	}
-// 	if (push->stack_a[push->size_a - 1] != push->max)
-// 		return (0);
-// 	return (1);
-// }
-
-void	doop(t_push *push, char **oper, int i)
+static void	doop(t_push *push, char **oper, int i)
 {
 	if (ft_strcmp(oper[i], "ra") == 0)
 		rotate_operations(push, 'a');
@@ -76,12 +57,12 @@ void	doop(t_push *push, char **oper, int i)
 		swap_operations(push, 'b');
 	else
 	{
-		printf("Error\n");
+		ft_printf("Error\n");
 		exit(0);
 	}
 }
 
-void ft_valid_buf(char **buff)
+static void ft_valid_buf(char **buff)
 {
 	int i;
 
@@ -110,14 +91,14 @@ void ft_valid_buf(char **buff)
 			return ;
 		else
 		{
-			printf("%s\n", buff[i]);
-			printf("Error\n");
+			ft_printf("%s\n", buff[i]);
+			ft_printf("Error\n");
 			exit(0);
 		}
 	}
 }
 
-void	read_input(t_push *push)
+void	ft_read_input(t_push *push)
 {
 	char	buff[BUFF_SIZE + 1];
 	char	*del;
@@ -138,17 +119,12 @@ void	read_input(t_push *push)
 		oper = ft_strsplit(temp, '\n');
 		ft_valid_buf(oper);
 	}
-	//temp = "ra\npb\npb\npb\npa\nra\npa\nrra\npa\nrra";
-	//temp = "ra\n";
 	if (i == 0)
 		return ;
 	i = -1;
 	oper = ft_strsplit(temp, '\n');
 	while (oper[++i] != NULL)
 	{
-		//printf("%s\n", oper[i]);
-		// if (i == 0)
-		// 	oper[i] += 35;
-		doop(push, oper, i); // выполняет считанные операции (там же частичная валидация)
+		doop(push, oper, i);
 	}
 }

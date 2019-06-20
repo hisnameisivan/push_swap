@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   operations.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: draudrau <draudrau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: waddam <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/18 18:53:28 by draudrau          #+#    #+#             */
-/*   Updated: 2019/06/18 18:53:30 by draudrau         ###   ########.fr       */
+/*   Created: 2019/06/20 23:13:29 by waddam            #+#    #+#             */
+/*   Updated: 2019/06/20 23:13:32 by waddam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void ft_swap(long *a, long *b)
+void ft_swap(int *a, int *b)
 {
-	long tmp_a;
+	int tmp_a;
 
 	tmp_a = *a;
 	*a = *b;
@@ -32,7 +32,7 @@ void	swap_operations(t_push	*push, char letter) //Операции SA SB SS
 		swap_operations(push, 'a');
 		swap_operations(push, 'b');
 	}
-	printstack(push);
+	ft_print_stack(push);
 }
 
 void	push_operations(t_push	*push, char letter) //Операции PA PB SS
@@ -70,12 +70,12 @@ void	push_operations(t_push	*push, char letter) //Операции PA PB SS
 		while (++i < push->size_b)
 			push->stack_b[i] = push->stack_b[i + 1];
 	}
-	printstack(push);
+	ft_print_stack(push);
 }
 
 void	rotate_operations(t_push *push, char letter) //Операции RA RB RR
 {
-	long tmp;
+	int tmp;
 	int i;
 
 	i = -1;
@@ -97,12 +97,12 @@ void	rotate_operations(t_push *push, char letter) //Операции RA RB RR
 		rotate_operations(push, 'a');
 		rotate_operations(push, 'b');
 	}
-	printstack(push);
+	ft_print_stack(push);
 }
 
 void	reverse_rotate_operations(t_push	*push, char letter) //Операции RRA RRB RRR
 {
-	long tmp;
+	int tmp;
 	int i;
 
 	i = letter == 'a' ? push->size_a - 1 : push->size_b - 1;
@@ -130,5 +130,5 @@ void	reverse_rotate_operations(t_push	*push, char letter) //Операции RRA
 		reverse_rotate_operations(push, 'a');
 		reverse_rotate_operations(push, 'b');
 	}
-	printstack(push);
+	ft_print_stack(push);
 }

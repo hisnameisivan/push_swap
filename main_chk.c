@@ -1,31 +1,41 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main_chk.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: waddam <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/06/20 22:54:52 by waddam            #+#    #+#             */
+/*   Updated: 2019/06/20 23:08:26 by waddam           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
-int		main(int ac, char **av)
+int		main(int argc, char **argv)
 {
 	int		count;
-	t_push	*push;
+	t_push	push;
 
 	count = 0;
-	push = (t_push *)malloc(sizeof(t_push));
-	ft_initialization_push(push);
-	while (++count < ac)
-		ft_valid(av[count], push);
-	if (push->size_a > 0)
+	ft_initialization_push(&push);
+	while (++count < argc)
+		ft_valid(argv[count], &push);
+	if (push.size_a > 0)
 	{
-		push->stack_a = (long *)malloc(push->size_a * sizeof(long));
-		push->stack_b = (long *)malloc(push->size_a * sizeof(long));
+		push.stack_a = (int *)malloc(push.size_a * sizeof(int));
+		push.stack_b = (int *)malloc(push.size_a * sizeof(int));
 		count = 0;
-		while (++count < ac)
-			ft_record(push, av[count]);
-		ft_check_repeat(push);
-		push->max = ft_max(push);
-		push->min = ft_min(push);
-		read_input(push); //считывает со стандартного ввода
-		printstack(push);
-		if (checker(push) == 1) // проверка, что стек отсортирован (каждый следующий элемент больше предыдущего)
-			printf("OK\n");
-		else
-			printf("KO\n");
+		while (++count < argc)
+			ft_record(&push, argv[count]);
+		ft_check_repeat(&push);
+		push.max = ft_max(&push);
+		push.min = ft_min(&push);
+		ft_read_input(&push);
+		ft_print_stack(&push);
+		ft_checker(&push) ? ft_printf("OK\n") : ft_printf("KO\n");
 	}
-	exit(0);
+	free(push.stack_a);
+	free(push.stack_b);
+	return (0);
 }
