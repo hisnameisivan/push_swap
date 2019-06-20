@@ -1,1 +1,0 @@
-gcc ft_push_swap.c min_max.c operations.c ft_cheacker.c main_ps.c libft/libft.a -g -o push_swap
