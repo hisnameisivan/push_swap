@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_push_swap.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: waddam <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: draudrau <draudrau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/25 19:19:59 by draudrau          #+#    #+#             */
-/*   Updated: 2019/06/18 23:16:46 by waddam           ###   ########.fr       */
+/*   Updated: 2019/06/19 22:21:51 by draudrau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int		ft_check_repeat(t_push	*push)
 				j++;
 			else
 			{
-				printf("repeat");
+				printf("Error\n");
 				exit(0);
 			}
 		}
@@ -102,7 +102,7 @@ void	ft_valid(char *av, t_push *push)
 			i++;
 		else
 		{
-			printf("invalid file\n");
+			printf("Error\n");
 			exit(0);
 		}
 	}
@@ -114,7 +114,7 @@ int		ft_skip_null_znak(char *argv)
 	int i;
 
 	i = 0;
-	while (argv[i] == '0' || argv[i] == '-' || argv[i] == '+')
+	while (argv[i] == '0' || argv[i] == '+')
 		i++;
 	return (i);
 }
@@ -153,23 +153,23 @@ void	printstack(t_push *push)
 	int t = push->size_a > push->size_b ? push->size_a : push->size_b;
 
 	i = -1;
-	t = i * 1; /* стереть */
-	// printf("----------------------------\n");
-	// printf("|%-11c ||" "%11c |\n", 'a', 'b');
-	// printf("----------------------------");
-	// printf("\n");
-	// while (++i < t)
-	// {
-	// 	if (i < push->size_a)
-	// 		printf("|%11ld |", push->stack_a[i]);
-	// 	else
-	// 		printf("|%11s |", " ");
-	// 	if (i < push->size_b)
-	// 		printf("|%11ld |\n", push->stack_b[i]);
-	// 	else
-	// 		printf("|%11s |\n", " ");
-	// }
-	// printf("----------------------------\n\n");
+	//t = i * 1; /* стереть */
+	printf("----------------------------\n");
+	printf("|%-11c ||" "%11c |\n", 'a', 'b');
+	printf("----------------------------");
+	printf("\n");
+	while (++i < t)
+	{
+		if (i < push->size_a)
+			printf("|%11ld |", push->stack_a[i]);
+		else
+			printf("|%11s |", " ");
+		if (i < push->size_b)
+			printf("|%11ld |\n", push->stack_b[i]);
+		else
+			printf("|%11s |\n", " ");
+	}
+	printf("----------------------------\n\n");
 }
 
 
@@ -182,7 +182,7 @@ void	ft_record(t_push *push, char *argv)
 			push->stack_a[push->i] = ft_atoi(argv);
 			if (ft_check_overflow(argv, push->stack_a[push->i]) == 1)
 			{
-				printf("overflow");
+				printf("Error\n");
 				exit(0);
 			}
 			while (*argv != ' ' && *argv != '\0')
@@ -223,7 +223,7 @@ void	ft_stack_balance(t_push *push)
 	}
 }
 
-void	ft_analyze_operation(t_push *push, t_swap *swap, int i)
+void	ft_analyze_operation(t_swap *swap)
 {
 	swap->pa = 1;
 	while (swap->ra != 0 && swap->rb != 0)
@@ -239,7 +239,7 @@ void	ft_analyze_operation(t_push *push, t_swap *swap, int i)
 		swap->rrr++;
 	}
 }
-
+	
 
 void	ft_sort_stack(t_push *push, t_swap *swap)
 {
@@ -306,7 +306,7 @@ void	ft_counter(t_push *push, t_swap *swap, int i) /* считает сколь�
 {
 	int j;
 	int tmp;
-
+	
 	j = 0;
 	tmp = push->stack_b[i];
 	if (i < push->size_b - i)
@@ -326,15 +326,13 @@ void	ft_counter(t_push *push, t_swap *swap, int i) /* считает сколь�
 		else
 			j++;
 	}
-	ft_analyze_operation(push, swap, i);
+	ft_analyze_operation(swap);
 }
 
 
 void	ft_count_operation(t_push *push)
 {
 	int		i;
-	int		j;
-	int		tmp;
 	t_swap	*swap;
 
 	i = 0;
@@ -347,11 +345,11 @@ void	ft_count_operation(t_push *push)
 		ft_write_index_res(push, swap, i);
 		i++;
 	}
-	ft_initialization_swap(swap);
+	ft_initialization_swap(swap); 
 	ft_sort_stack(push, swap);
 	free(swap);
 }
-
+	
 
 void	ft_sort_three_item(t_push *push)
 {
@@ -393,7 +391,7 @@ void	ft_separate_stack(t_push *push) /* от 17/06 оставляем min, max, 
 	int i;
 
 	i = 0;
-	while (push->size_a != 3)
+	while (push->size_a > 3)
 	{
 		if ((push->stack_a[i] != push->min) && (push->stack_a[i] != push->max))
 		{
@@ -421,7 +419,7 @@ void	ft_separate_stack(t_push *push) /* от 17/06 оставляем min, max, 
 		}
 		else
 			i++;
-
+		
 	}
 	if (push->size_a == 3 && ft_check_sort_elements(push) == 0)
 		ft_sort_three_item(push);
@@ -458,38 +456,3 @@ int		ft_check_cyclic_sorting(t_push *push)
 	}
 	return (1);
 }
-
-
-// int		main(int ac, char **av)
-// {
-// 	int		count;
-// 	t_push	*push;
-
-// 	count = 0;
-// 	push = (t_push*)malloc(sizeof(t_push));
-// 	ft_initialization_push(push);
-// 	while (++count < ac)
-// 		ft_valid(av[count], push);
-// 	push->stack_a = (long *)malloc(push->size_a * sizeof(long));
-// 	push->stack_b = (long *)malloc(push->size_a * sizeof(long));
-// 	count = 0;
-// 	while (++count < ac)
-// 		ft_record(push, av[count]);
-// 	ft_check_repeat(push);
-// 	push->max = ft_max(push);
-// 	push->min = ft_min(push);
-// 	//ft_select_to_leave_a(push);
-// 	if (ft_check_cyclic_sorting(push) == 1)
-// 	{
-// 		ft_stack_balance(push);
-// 		exit (0);
-// 	}
-// 	ft_separate_stack(push);
-// 	while (push->size_b)
-// 	{
-// 		push->fl = 0;
-// 		ft_count_operation(push);
-// 	}
-// 	ft_stack_balance(push);
-// 	exit (0);
-// }

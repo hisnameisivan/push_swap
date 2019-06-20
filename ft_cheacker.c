@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cheacker.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: waddam <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: draudrau <draudrau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/18 20:53:34 by draudrau          #+#    #+#             */
-/*   Updated: 2019/06/18 23:56:55 by waddam           ###   ########.fr       */
+/*   Updated: 2019/06/19 21:47:05 by draudrau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int		checker(t_push *push)
 	int		pre;
 
 	i = 1;
-	if (push->stack_a[0] != ft_min(push))
+	if (push->stack_a[0] != push->min)
 		return (0);
 	pre = push->stack_a[0];
 	while (i < push->size_a)
@@ -28,10 +28,29 @@ int		checker(t_push *push)
 		pre = push->stack_a[i];
 		i++;
 	}
-	if (push->stack_a[push->size_a - 1] != ft_max(push))
+	if (push->stack_a[push->size_a - 1] != push->max)
 		return (0);
 	return (1);
 }
+
+// int		checker_2(t_push *push)
+// {
+// 	int		i;
+
+// 	i = 0;
+// 	if (push->stack_a[0] != push->min)
+// 		return (0);
+// 	while (i + 1 < push->size_a)
+// 	{
+// 		if (push->stack_a[i] < push->stack_a[i + 1])
+// 			i++;
+// 		else
+// 			return (0);
+// 	}
+// 	if (push->stack_a[push->size_a - 1] != push->max)
+// 		return (0);
+// 	return (1);
+// }
 
 void	doop(t_push *push, char **oper, int i)
 {
@@ -62,6 +81,42 @@ void	doop(t_push *push, char **oper, int i)
 	}
 }
 
+void ft_valid_buf(char **buff)
+{
+	int i;
+
+	i = 0;
+	while (buff[i] != NULL)
+	{
+		if (ft_strcmp(buff[i], "ra") == 0)
+			return ;
+		else if (ft_strcmp(buff[i], "rb") == 0)
+			return ;
+		else if (ft_strcmp(buff[i], "rr") == 0)
+			return ;
+		else if (ft_strcmp(buff[i], "rra") == 0)
+			return ;
+		else if (ft_strcmp(buff[i], "rrb") == 0)
+			return ;
+		else if (ft_strcmp(buff[i], "rrr") == 0)
+			return ;
+		else if (ft_strcmp(buff[i], "pa") == 0)
+			return ;
+		else if (ft_strcmp(buff[i], "pb") == 0)
+			return ;
+		else if (ft_strcmp(buff[i], "sa") == 0)
+			return ;
+		else if (ft_strcmp(buff[i], "sb") == 0)
+			return ;
+		else
+		{
+			printf("%s\n", buff[i]);
+			printf("Error\n");
+			exit(0);
+		}
+	}
+}
+
 void	read_input(t_push *push)
 {
 	char	buff[BUFF_SIZE + 1];
@@ -72,14 +127,18 @@ void	read_input(t_push *push)
 	int		i;
 
 	i = 0;
+	temp = ft_strnew(0);
 	while ((ret = read(0, buff, BUFF_SIZE)) > 0)
 	{
 		buff[ret] = '\0';
 		del = temp;
 		temp = ft_strjoin(temp, buff);
+		free(del);
 		i++;
+		oper = ft_strsplit(temp, '\n');
+		ft_valid_buf(oper);
 	}
-	//temp = "rra\nrra\npb\nra\npa\nra\nra"
+	//temp = "ra\npb\npb\npb\npa\nra\npa\nrra\npa\nrra";
 	//temp = "ra\n";
 	if (i == 0)
 		return ;
@@ -92,32 +151,4 @@ void	read_input(t_push *push)
 		// 	oper[i] += 35;
 		doop(push, oper, i); // выполняет считанные операции (там же частичная валидация)
 	}
-}
-
-int		main(int ac, char **av)
-{
-	int		count;
-	t_push	*push;
-
-	count = 0;
-	push = (t_push *)malloc(sizeof(t_push));
-	ft_initialization_push(push);
-	while (++count < ac)
-		ft_valid(av[count], push);
-	if (push->size_a > 0)
-	{
-		push->stack_a = (long *)malloc(push->size_a * sizeof(long));
-		push->stack_b = (long *)malloc(push->size_a * sizeof(long));
-		count = 0;
-		while (++count < ac)
-			ft_record(push, av[count]);
-		ft_check_repeat(push);
-		read_input(push); //считывает со стандартного ввода
-		printstack(push);
-		if (checker(push) == 1) // проверка, что стек отсортирован (каждый следующий элемент больше предыдущего)
-			printf("OK\n");
-		else
-			printf("KO\n");
-	}
-	exit(0);
 }

@@ -55,7 +55,7 @@ int				ft_check_overflow(char *argv, int num);
 void			ft_record(t_push *push, char *argv);
 
 void			ft_stack_balance(t_push *push);
-void			ft_analyze_operation(t_push *push, t_swap *swap, int i);
+void			ft_analyze_operation(t_swap *swap);
 
 void			ft_sort_stack(t_push *push, t_swap *swap);
 void			ft_write_index_res(t_push *push, t_swap *swap, int i);
@@ -67,6 +67,10 @@ int				ft_check_sort_elements(t_push *push);
 void			ft_separate_stack(t_push *push);
 
 int				ft_check_cyclic_sorting(t_push *push);
+
+int				checker(t_push *push);
+
+void			read_input(t_push *push);
 
 //int 	ft_stay_item(t_push *push, int num);
 
