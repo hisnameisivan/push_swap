@@ -6,7 +6,7 @@
 /*   By: waddam <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 23:12:01 by waddam            #+#    #+#             */
-/*   Updated: 2019/06/20 23:57:12 by waddam           ###   ########.fr       */
+/*   Updated: 2019/06/25 23:33:27 by waddam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,32 @@
 
 void	ft_print_stack(t_push *push)
 {
-	int i;
-	int t = push->size_a > push->size_b ? push->size_a : push->size_b;
+	int		i;
+	int		t = push->size_a > push->size_b ? push->size_a : push->size_b;
 
 	i = -1;
-	//t = i * 1; /* стереть */
-	printf("----------------------------\n");
-	printf("|%-11c ||" "%11c |\n", 'a', 'b');
-	printf("----------------------------");
-	printf("\n");
-	while (++i < t)
-	{
-		if (i < push->size_a)
-			printf("|%11d |", push->stack_a[i]);
-		else
-			printf("|%11s |", " ");
-		if (i < push->size_b)
-			printf("|%11d |\n", push->stack_b[i]);
-		else
-			printf("|%11s |\n", " ");
-	}
-	printf("----------------------------\n\n");
+	t = i * 1; /* стереть */
+	// printf("----------------------------\n");
+	// printf("|%-11c ||" "%11c |\n", 'a', 'b');
+	// printf("----------------------------");
+	// printf("\n");
+	// while (++i < t)
+	// {
+	// 	if (i < push->size_a)
+	// 		printf("|%11d |", push->stack_a[i]);
+	// 	else
+	// 		printf("|%11s |", " ");
+	// 	if (i < push->size_b)
+	// 		printf("|%11d |\n", push->stack_b[i]);
+	// 	else
+	// 		printf("|%11s |\n", " ");
+	// }
+	// printf("----------------------------\n\n");
 }
 
 void	ft_stack_balance(t_push *push)
 {
-	int	i;
+	int		i;
 
 	i = 0;
 	while (push->stack_a[i] != push->min)
@@ -49,7 +49,7 @@ void	ft_stack_balance(t_push *push)
 		while (i > 0)
 		{
 			printf("ra\n");
-			rotate_operations(push, 'a');
+			ft_rotate_operations(push, 'a');
 			i--;
 		}
 	}
@@ -59,7 +59,7 @@ void	ft_stack_balance(t_push *push)
 		while (i > 0)
 		{
 			printf("rra\n");
-			reverse_rotate_operations(push, 'a');
+			ft_reverse_rotate_operations(push, 'a');
 			i--;
 		}
 	}
@@ -82,60 +82,57 @@ void	ft_analyze_operation(t_swap *swap)
 	}
 }
 
-
 void	ft_sort_stack(t_push *push, t_swap *swap)
 {
 	ft_counter(push, swap, push->index);
-
 	while (swap->ra > 0)
 	{
 		printf("ra\n");
-		rotate_operations(push, 'a');
+		ft_rotate_operations(push, 'a');
 		swap->ra--;
 	}
 	while (swap->rb > 0)
 	{
 		printf("rb\n");
-		rotate_operations(push, 'b');
+		ft_rotate_operations(push, 'b');
 		swap->rb--;
 	}
 	while (swap->rr > 0)
 	{
 		printf("rr\n");
-		rotate_operations(push, 'r');
+		ft_rotate_operations(push, 'r');
 		swap->rr--;
 	}
 	while (swap->rra > 0)
 	{
 		printf("rra\n");
-		reverse_rotate_operations(push, 'a');
+		ft_reverse_rotate_operations(push, 'a');
 		swap->rra--;
 	}
 	while (swap->rrb > 0)
 	{
 		printf("rrb\n");
-		reverse_rotate_operations(push, 'b');
+		ft_reverse_rotate_operations(push, 'b');
 		swap->rrb--;
 	}
 	while (swap->rrr > 0)
 	{
 		printf("rrr\n");
-		reverse_rotate_operations(push, 'r');
+		ft_reverse_rotate_operations(push, 'r');
 		swap->rrr--;
 	}
 	printf("pa\n");
-	push_operations(push, 'a');
+	ft_push_operations(push, 'a');
 }
-
 
 void	ft_write_index_res(t_push *push, t_swap *swap, int i)
 {
 	if (push->fl == 0)
-		{
-			push->res = swap->ra + swap->rb + swap->rr + swap->rra + swap->rrb + swap->rrr;
-			push->index = i;
-			push->fl = 1;
-		}
+	{
+		push->res = swap->ra + swap->rb + swap->rr + swap->rra + swap->rrb + swap->rrr;
+		push->index = i;
+		push->fl = 1;
+	}
 	else if (push->fl == 1 && ((push->res > swap->ra + swap->rb + swap->rr + swap->rra + swap->rrb + swap->rrr) || (push->size_b == 1)))
 	{
 		push->res = swap->ra + swap->rb + swap->rr + swap->rra + swap->rrb + swap->rrr;
@@ -143,11 +140,10 @@ void	ft_write_index_res(t_push *push, t_swap *swap, int i)
 	}
 }
 
-
 void	ft_counter(t_push *push, t_swap *swap, int i) /* считает сколько требуется операций, чтобы перебросить i-ый элемент из b в a */
 {
-	int j;
-	int tmp;
+	int		j;
+	int		tmp;
 
 	j = 0;
 	tmp = push->stack_b[i];
@@ -171,7 +167,6 @@ void	ft_counter(t_push *push, t_swap *swap, int i) /* считает сколь�
 	ft_analyze_operation(swap);
 }
 
-
 void	ft_count_operation(t_push *push)
 {
 	int		i;
@@ -192,30 +187,27 @@ void	ft_count_operation(t_push *push)
 	free(swap);
 }
 
-
 void	ft_sort_three_item(t_push *push)
 {
 	printf("sa\n");
 	if (push->stack_a[1] == push->min)
 	{
-		swap_operations(push, 'a');
+		ft_swap_operations(push, 'a');
 		return ;
 	}
 	else
-		swap_operations(push, 'a');
+		ft_swap_operations(push, 'a');
 	if (push->stack_a[0] == push->min)
 	{
-		rotate_operations(push, 'a');
+		ft_rotate_operations(push, 'a');
 		printf("ra\n");
 	}
 	else if (push->stack_a[2] == push->min)
 	{
-		reverse_rotate_operations(push, 'a');
+		ft_reverse_rotate_operations(push, 'a');
 		printf("rra\n");
 	}
 }
-
-
 
 int		ft_check_sort_elements(t_push *push)
 {
@@ -227,10 +219,9 @@ int		ft_check_sort_elements(t_push *push)
 		return (0);
 }
 
-
 void	ft_separate_stack(t_push *push) /* от 17/06 оставляем min, max, рандом и сортируем  */
 {
-	int i;
+	int		i;
 
 	i = 0;
 	while (push->size_a > 3)
@@ -242,7 +233,7 @@ void	ft_separate_stack(t_push *push) /* от 17/06 оставляем min, max, 
 				while (i > 0)
 				{
 					printf("ra\n");
-					rotate_operations(push, 'a');
+					ft_rotate_operations(push, 'a');
 					i--;
 				}
 			}
@@ -251,12 +242,12 @@ void	ft_separate_stack(t_push *push) /* от 17/06 оставляем min, max, 
 				while (push->size_a - i > 0)
 				{
 					printf("rra\n");
-					reverse_rotate_operations(push, 'a');
+					ft_reverse_rotate_operations(push, 'a');
 					i++;
 				}
 			}
 			printf("pb\n");
-			push_operations(push, 'b');
+			ft_push_operations(push, 'b');
 			i = 0;
 		}
 		else
@@ -267,10 +258,9 @@ void	ft_separate_stack(t_push *push) /* от 17/06 оставляем min, max, 
 		ft_sort_three_item(push);
 }
 
-
 int		ft_check_cyclic_sorting(t_push *push)
 {
-	int i;
+	int		i;
 
 	i = 0;
 	while (push->stack_a[i] != push->min)

@@ -6,7 +6,7 @@
 /*   By: waddam <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 22:54:52 by waddam            #+#    #+#             */
-/*   Updated: 2019/06/20 23:08:26 by waddam           ###   ########.fr       */
+/*   Updated: 2019/06/25 23:43:10 by waddam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ int		main(int argc, char **argv)
 		push.max = ft_max(&push);
 		push.min = ft_min(&push);
 		ft_read_input(&push);
-		ft_print_stack(&push);
-		ft_checker(&push) ? ft_printf("OK\n") : ft_printf("KO\n");
+		ft_print_stack(&push); //?
+		ft_check_sort(&push) ? ft_printf("OK\n") : ft_printf("KO\n");
 	}
 	free(push.stack_a);
 	free(push.stack_b);

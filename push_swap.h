@@ -6,7 +6,7 @@
 /*   By: waddam <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 23:13:52 by waddam            #+#    #+#             */
-/*   Updated: 2019/06/20 23:50:24 by waddam           ###   ########.fr       */
+/*   Updated: 2019/06/25 23:43:18 by waddam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,12 @@ typedef struct	s_swap
 int				ft_max(t_push *push);
 int				ft_min(t_push *push);
 
-
 void			ft_swap(int *a, int *b);
-void			swap_operations(t_push	*pu, char letter);
-void			push_operations(t_push	*pu, char letter);
-void			rotate_operations(t_push	*pu, char letter);
-void			reverse_rotate_operations(t_push	*pu, char letter);
-
+void			ft_additional_po(t_push *push, char letter);
+void			ft_swap_operations(t_push *push, char letter);
+void			ft_push_operations(t_push *push, char letter);
+void			ft_rotate_operations(t_push *push, char letter);
+void			ft_reverse_rotate_operations(t_push *push, char letter);
 
 void			ft_initialization_push(t_push *push);
 void			ft_initialization_swap(t_swap *swap);
@@ -60,10 +59,10 @@ void			ft_initialization_swap(t_swap *swap);
 //void			ft_count_digits(char *argv, t_push *push);
 int				ft_check_repeat(t_push	*push);
 void			ft_valid(char *argv, t_push *push);
-void			ft_print_stack(t_push *push);
 //int				ft_skip_null_sign(char *argv);
 //int				ft_check_overflow(char *argv, int num);
 void			ft_record(t_push *push, char *argv);
+void			ft_print_stack(t_push *push);
 
 void			ft_stack_balance(t_push *push);
 void			ft_analyze_operation(t_swap *swap);
@@ -79,8 +78,7 @@ void			ft_separate_stack(t_push *push);
 
 int				ft_check_cyclic_sorting(t_push *push);
 
-int				ft_checker(t_push *push);
-
+int				ft_check_sort(t_push *push);
 void			ft_read_input(t_push *push);
 
 //int 	ft_stay_item(t_push *push, int num);

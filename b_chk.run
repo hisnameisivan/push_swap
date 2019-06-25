@@ -1,1 +1,2 @@
-gcc -o checker ft_cheacker.c ft_printf/libftprintf.a ft_push_swap.c ft_min_max.c operations.c main_chk.c -g ft_valid.c ft_initialization.c ft_record.c
+gcc -o checker ft_cheacker.c ft_printf/libftprintf.a ft_push_swap.c ft_min_max.c ft_operations.c \
+ft_additional_operations.c main_chk.c -g ft_valid.c ft_initialization.c ft_record.c
