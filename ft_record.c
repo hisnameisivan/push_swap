@@ -6,7 +6,7 @@
 /*   By: waddam <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 23:36:57 by waddam            #+#    #+#             */
-/*   Updated: 2019/06/20 23:55:58 by waddam           ###   ########.fr       */
+/*   Updated: 2019/07/10 23:57:36 by waddam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static int	ft_check_overflow(char *argv, int num)
 		i++;
 		j++;
 	}
+	free(str);
 	return (0);
 }
 
@@ -50,7 +51,10 @@ void		ft_record(t_push *push, char *argv)
 {
 	while (*argv != '\0')
 	{
-		if ((*argv >= '0' && *argv <= '9') || (*argv == '-'))
+		if (argv[0] == '-' && argv[1] == 'v')
+			argv++;
+		else if ((*argv >= '0' && *argv <= '9')
+		|| (*argv == '-' || *argv == '+'))
 		{
 			push->stack_a[push->i] = ft_atoi(argv);
 			if (ft_check_overflow(argv, push->stack_a[push->i]) == 1)

@@ -6,7 +6,7 @@
 /*   By: waddam <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 23:12:01 by waddam            #+#    #+#             */
-/*   Updated: 2019/06/28 00:08:50 by waddam           ###   ########.fr       */
+/*   Updated: 2019/07/11 00:04:29 by waddam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,29 @@
 void	ft_print_stack(t_push *push)
 {
 	int		i;
-	int		t = push->size_a > push->size_b ? push->size_a : push->size_b;
+	int		len;
 
 	i = -1;
-	t = i * 1; /* стереть */
-	// printf("----------------------------\n");
-	// printf("|%-11c ||" "%11c |\n", 'a', 'b');
-	// printf("----------------------------");
-	// printf("\n");
-	// while (++i < t)
-	// {
-	// 	if (i < push->size_a)
-	// 		printf("|%11d |", push->stack_a[i]);
-	// 	else
-	// 		printf("|%11s |", " ");
-	// 	if (i < push->size_b)
-	// 		printf("|%11d |\n", push->stack_b[i]);
-	// 	else
-	// 		printf("|%11s |\n", " ");
-	// }
-	// printf("----------------------------\n\n");
+	len = push->size_a > push->size_b ? push->size_a : push->size_b;
+	if (push->vis)
+	{
+		ft_printf("----------------------------\n");
+		ft_printf("|%-11c ||" "%11c |\n", 'a', 'b');
+		ft_printf("----------------------------");
+		ft_printf("\n");
+		while (++i < len)
+		{
+			if (i < push->size_a)
+				ft_printf("|%11d |", push->stack_a[i]);
+			else
+				ft_printf("|%11s |", " ");
+			if (i < push->size_b)
+				ft_printf("|%11d |\n", push->stack_b[i]);
+			else
+				ft_printf("|%11s |\n", " ");
+		}
+		ft_printf("----------------------------\n\n");
+	}
 }
 
 void	ft_stack_balance(t_push *push)

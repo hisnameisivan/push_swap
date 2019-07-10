@@ -6,7 +6,7 @@
 /*   By: waddam <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 23:13:52 by waddam            #+#    #+#             */
-/*   Updated: 2019/06/28 00:28:21 by waddam           ###   ########.fr       */
+/*   Updated: 2019/07/10 23:33:10 by waddam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include "./libft/libft.h"
 # include "./ft_printf/header/ft_printf.h"
-//#include <stdio.h>
 
 typedef struct	s_push
 {
@@ -28,6 +27,7 @@ typedef struct	s_push
 	int			min;
 	int			res;
 	int			index;
+	int			vis;
 	int			fl;
 }				t_push;
 

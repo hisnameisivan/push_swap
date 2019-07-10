@@ -6,7 +6,7 @@
 /*   By: waddam <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 23:48:29 by waddam            #+#    #+#             */
-/*   Updated: 2019/06/28 00:22:43 by waddam           ###   ########.fr       */
+/*   Updated: 2019/07/10 21:24:09 by waddam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	ft_analyze_operation(t_swap *swap)
 	}
 }
 
-void		ft_counter(t_push *push, t_swap *swap, int i) /* считает сколько требуется операций, чтобы перебросить i-ый элемент из b в a */
+void		ft_counter(t_push *push, t_swap *swap, int i)
 {
 	int		j;
 	int		tmp;

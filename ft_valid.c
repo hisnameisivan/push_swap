@@ -6,7 +6,7 @@
 /*   By: waddam <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 23:22:26 by waddam            #+#    #+#             */
-/*   Updated: 2019/06/20 23:57:58 by waddam           ###   ########.fr       */
+/*   Updated: 2019/07/11 00:05:00 by waddam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,14 @@ static void	ft_count_digits(char *argv, t_push *push)
 	flag = 0;
 	while (argv[i] != '\0')
 	{
-		if (argv[i] == ' ')
+		if (argv[i] == ' ' || (push->vis && argv[i] == '-')
+			|| (push->vis && argv[i] == 'v'))
 		{
 			i++;
 			flag = 0;
 		}
-		else if (((argv[i] >= '0' && argv[i] <= '9') || argv[i] == '-') &&
-			flag == 0)
+		else if (((argv[i] >= '0' && argv[i] <= '9')
+			|| (argv[i] == '-' || argv[i] == '+')) && flag == 0)
 		{
 			push->size_a++;
 			flag = 1;
@@ -51,6 +52,11 @@ void		ft_valid(char *argv, t_push *push)
 			i++;
 		else if ((argv[i] >= '0' && argv[i] <= '9') || (argv[i] == ' '))
 			i++;
+		else if (argv[0] == '-' && argv[1] == 'v')
+		{
+			push->vis = 1;
+			i = i + 2;
+		}
 		else
 		{
 			ft_printf("Error\n");
