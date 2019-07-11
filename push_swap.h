@@ -6,7 +6,7 @@
 /*   By: waddam <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 23:13:52 by waddam            #+#    #+#             */
-/*   Updated: 2019/07/10 23:33:10 by waddam           ###   ########.fr       */
+/*   Updated: 2019/07/11 23:21:24 by waddam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define PUSH_SWAP_H
 
 # include "./libft/libft.h"
-# include "./ft_printf/header/ft_printf.h"
 
 typedef struct	s_push
 {

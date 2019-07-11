@@ -1,56 +1,34 @@
-OBJ_DIR	 = ./obj
-OBJ_DIRC = ./objc
-LIB_DIR	 = ./ft_printf
+NAME_P = push_swap
 
-NAME	 = push_swap
-NAMEC    = checker
-LIBFT 	 = $(LIB_DIR)/libftprintf.a
+NAME_C = checker
 
-SRC 	 = ft_push_swap.c operations.c min_max.c ft_cheacker.c main_ps.c
-SRCC     = ft_cheacker.c ft_push_swap.c min_max.c operations.c main_chk.c
+SRC_P = ft_min_max.c ft_operations.c ft_additional_operations.c\
+	ft_valid.c ft_initialization.c ft_record.c ft_separate_stack.c\
+	ft_cheacker.c main_ps.c ft_count_operation.c ft_sort.c\
+	ft_additional_functions.c
 
-OBJ 	 = $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
-OBJC	 = $(addprefix $(OBJ_DIRC)/,$(SRCC:.c=.o))
+SRC_C = ft_cheacker.c ft_additional_functions.c ft_operations.c\
+	ft_additional_operations.c main_chk.c ft_valid.c ft_initialization.c\
+	ft_record.c ft_min_max.c
 
-CC	 = gcc
-CFLAGS	 = -Wall -Wextra -Werror
-LIB_INC  = -I $(LIB_DIR)/include
-LIB_LINK = -L $(LIB_DIR) -lft
+LIBFT = ./libft/libft.a
 
-all: $(NAME) $(NAMEC)
+all: $(NAME_P) $(NAME_C)
 
-$(LIBFT):
-	@make -C $(LIB_DIR) #--no-print-directory
+$(NAME_P): $(SRC_P)
+	make -C ./libft
+	gcc -Wall -Werror -Wextra $(SRC_P) $(LIBFT) -o $(NAME_P)
 
-$(OBJ_DIR):
-	@mkdir -p $@
-$(OBJ_DIRC):
-	@mkdir -p $@
-
-$(NAME): $(LIBFT) $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) $(LIB_INC) $(LIB_LINK) -o $(NAME)
-	#@echo push_swap Executable created.
-$(NAMEC): $(LIBFT) $(OBJC)
-	$(CC) $(CFLAGS) $(OBJC) $(LIB_INC) $(LIB_LINK) -o $(NAMEC)
-	#@echo checker Executable created.
-
-$(addprefix $(OBJ_DIR)/, %.o):%.c | $(OBJ_DIR)
-	$(CC) $(CFLAGS) $(LIB_INC) -c $< -o $@
-$(addprefix $(OBJ_DIRC)/, %.o):%.c | $(OBJ_DIRC)
-	$(CC) $(CFLAGS) $(LIB_INC) -c $< -o $@
+$(NAME_C): $(SRC_C)
+	make -C ./libft
+	gcc -Wall -Werror -Wextra $(SRC_C) $(LIBFT) -o $(NAME_C)
 
 clean:
-	@make -C $(LIB_DIR) clean #--no-print-directory
-	rm -rf $(OBJ_DIR)
-	#@echo push_swap Object files deleted.
-	rm -rf $(OBJ_DIRC)
-	#@echo checker Object files deleted.
+	make clean -C ./libft
 
 fclean: clean
-	@make -C $(LIB_DIR) fclean --no-print-directory
-	rm -f $(NAME)
-	#@echo push_swap Executable deleted.
-	rm -f $(NAMEC)
-	#@echo checker Executable deleted.
+	make fclean -C ./libft
+	rm -f $(NAME_P)
+	rm -f $(NAME_C)
 
 re: fclean all
